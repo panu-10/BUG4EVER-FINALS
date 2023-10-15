@@ -1,0 +1,118 @@
+###hotel ranking
+#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+    int t;
+    cin>>t;
+    while(t--){
+       int n;
+       cin>>n;
+       vector<int>arr(n);
+       for(int i=0;i<n;i++) cin>>arr[i];
+       long long sum=0;
+       long long count=1;
+       for(int i=n-1;i>=0;i--){
+          if(arr[i]>=arr[i-1]){
+               sum+=count;
+          }
+          else if(arr[i]<arr[i-1]){
+             count=1;
+             sum+=count;
+          }
+       }
+       cout<<sum<<endl;
+    }
+    return 0;
+}
+
+###miners game
+#include<bits/stdc++.h>
+using namespace std;
+
+int f(int rem, int chance, vector<vector<int>>& dp) {
+    if (rem == 0) {
+        if (chance == 0) {
+            return 1;
+        }
+        return 0;
+    }
+    if (dp[rem][chance] != -1) return dp[rem][chance];
+    int min1 = INT_MAX;
+    int max1 = INT_MIN; 
+    for (int i = 1; i * i <= rem; i++) {
+        int ans = f(rem - (i * i), chance ^ 1, dp); 
+        if (chance == 0) {
+            min1 = min(min1, ans);
+        }
+        else {
+            max1 = max(max1, ans);
+        }
+    }
+    if (chance == 0) {
+        dp[rem][chance] = min1;
+    }
+    else {
+        dp[rem][chance] = max1;
+    }
+    return dp[rem][chance];
+}
+
+int main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        int n;
+        cin >> n;
+        vector<vector<int>> dp(n + 1, vector<int>(2, -1));
+        cout << f(n, 1, dp) << endl;
+    }
+    return 0;
+}
+
+###large product
+#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+    int t;
+    cin>>t;
+    while(t--){
+       int a,b;
+       cin>>a>>b;
+       long long prod=1;
+       for(int i=a;i<=b;i++){
+          prod*=i;
+       }
+       string s=to_string(prod);
+       string p;
+     int count=0;
+     int index;
+     for(int i=s.size()-1;i>=0;i--){
+         if(s[i]=='0'){ 
+             count++;
+         }
+         else{
+             index=i;
+             break;
+         }
+     }
+     for(int i=0;i<=index;i++){
+         p+=s[i];
+     }
+       string first,second;
+       if(p.size()<=10){
+          cout<<p<<'e'<<count<<endl;
+       }
+       else{
+              for(int i=0;i<=4;i++){
+                     first+=p[i];
+       }
+       for(int i=p.size()-5;i<p.size();i++){
+                  second+=p[i];
+       }
+        cout<<first<<"..."<<second<<'e'<<count<<endl;
+       }
+    }
+    return 0;
+}
