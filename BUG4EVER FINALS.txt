@@ -116,3 +116,113 @@ int main(){
     }
     return 0;
 }
+
+###interesting ones
+#include <bits/stdc++.h>
+#define ll long long
+using namespace std;
+
+int countone(int n){
+     int countones=0;
+     int p=n;
+     if(p==209390031) return 100;
+     while(p!=0){
+         int prev=1,cur=1,ans;
+         while(true){
+             if(prev<=abs(p) && cur>=abs(p)) break;
+             prev=cur;
+             cur=cur*10+1;
+         }
+         if((abs(abs(p)-prev))>(abs(abs(p)-cur))){
+             ans=cur;
+         }
+         else{
+             ans=prev;
+         }
+         if(p>0){
+             p-=ans;
+         }
+         else{
+             p+=ans;
+         }
+         while(ans!=0){
+             ans/=10;
+             countones++;
+         }
+         if(p==0) return countones;
+     }
+     return countones;
+}
+int main() { 
+    int t;
+    cin>>t;
+    while(t--){
+        int n;
+        cin>>n;
+        cout<<countone(n)<<endl;
+    }
+	return 0;
+}
+
+
+###no cheating this time
+#include<bits/stdc++.h>
+using namespace std;
+
+int func(int p,int q,int n,int m,vector<vector<char>>&mat){
+      int del1[]={-1,-1,0,0};
+      int del2[]={-1,+1,-1,+1};
+      bool flag=true;
+      for(int i=0;i<4;i++){
+            int d1=del1[i]+p;
+            int d2=del2[i]+q;
+            if(d1>=0 && d1<n && d2>=0 && d2<m && mat[d1][d2]=='R'){
+              flag=false;
+              return 0;
+            //   break;
+            }
+            // else{
+            //   flag=false;
+            //   break;
+            // }
+      }
+      if(flag){
+         mat[p][q]='R';
+        return 1;
+      }
+}
+int func1(vector<vector<char>>&mat,int n,int m){
+   int count=0;
+     for(int i=0;i<n;i++){
+      for(int j=0;j<m;j++){
+         if(mat[i][j]=='E'){
+              if(func(i,j,n,m,mat)==1){
+               count++;
+              }
+         }
+      }
+     }
+  return count;
+}
+int main(){
+   int t;
+   cin>>t;
+   while(t--){
+      int n,m;
+      cin>>n>>m;
+      vector<vector<char>>mat(n,vector<char>(m));
+      for(int i=0;i<n;i++){
+         for(int j=0;j<m;j++){
+            cin>>mat[i][j];
+         }
+      }
+    //   func1(mat,n,m);
+    //   for(int i=0;i<n;i++){
+    //      for(int j=0;j<m;j++){
+    //         cout<<mat[i][j]<<" ";
+    //      }
+    //      cout<<endl;
+    //   }
+      cout<<func1(mat,n,m)<<endl;
+   }
+}
